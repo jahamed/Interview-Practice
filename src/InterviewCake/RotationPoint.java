@@ -3,6 +3,7 @@ package InterviewCake;
 public class RotationPoint {
 
     public static int findRotationPoint(String[] words) {
+        // O(lgn) time and O(1) space
         final String firstWord = words[0];
 
         int floorIndex = 0;
