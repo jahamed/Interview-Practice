@@ -41,8 +41,27 @@ public class Fibonacci {
         return result;
     }
 
+    public static int fibIterative(int n) {
+        // O(n) time, O(1) space
+        if (n == 0 || n == 1) {
+            return n;
+        }
+
+        int prev = 0;
+        int prevPrev = 1;
+        int current = 0;
+
+        for (int i = 0; i < n; i++) {
+            current = prev + prevPrev;
+            prevPrev = prev;
+            prev = current;
+        }
+
+        return current;
+    }
+
     public static void main(String[] args) {
         //System.out.println(fibRecursive(20));
-        System.out.println(fibMemoize(70));
+        System.out.println(fibIterative(3));
     }
 }

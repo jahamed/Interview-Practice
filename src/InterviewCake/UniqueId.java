@@ -1,8 +1,14 @@
+package InterviewCake;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class UniqueId {
+    // #21
+
+
     public static Integer findUniqueId(int[] ids) {
+
         Map<Integer, Integer> idMap = new HashMap<Integer, Integer>();
         Integer uniqueId = null;
 
