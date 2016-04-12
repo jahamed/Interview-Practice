@@ -9,7 +9,7 @@ public class LinkedListNode {
     }
 
     public void deleteNode(LinkedListNode nodeToDelete) {
-
+        // O(1) time, O(1) space
         // get the input node's next node, the one we want to skip to
         LinkedListNode nextNode = nodeToDelete.next;
 
@@ -48,6 +48,29 @@ public class LinkedListNode {
 
         // case: fastRunner hit the end of the list
         return false;
+    }
+
+    public LinkedListNode reverseInPlace(LinkedListNode headOfList) {
+        LinkedListNode current = headOfList;
+        LinkedListNode previous = null;
+        LinkedListNode nextNode = null;
+
+        // until we have 'fallen off' the end of the list
+        while (current != null) {
+
+            // copy a pointer to the next element
+            // before we overwrite current.next
+            nextNode = current.next;
+
+            // reverse the 'next' pointer
+            current.next = previous;
+
+            // step forward in the list
+            previous = current;
+            current = nextNode;
+        }
+
+        return previous;
     }
 
     public static void main(String[] args){
