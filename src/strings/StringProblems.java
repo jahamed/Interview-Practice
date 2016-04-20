@@ -32,6 +32,13 @@ public class StringProblems {
         return buffer.toString();
     }
 
+    public static String reverseRecursive(String str) {
+        if (str == null || str.length() <= 1) {
+            return str;
+        }
+        return reverseRecursive(str.substring(1) + str.charAt(0));
+    }
+
     public static Character firstNonRepeatedChar(String str) {
         HashMap<Character, Integer> numMap = new HashMap<Character, Integer>();
 
