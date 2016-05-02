@@ -5,19 +5,44 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class BinaryTree {
-    public static class TreeNode {
+    public static class Node {
         int data;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int data) {
+        Node left;
+        Node right;
+        Node(int data) {
             this.data = data;
         }
     }
 
+    private Node root;
+
+    public BinaryTree() {
+        // Empty Tree
+    }
+
+    public Node findNode(int key) {
+        // Finds the node with given key, or returns null otherwise.
+        if(root == null) { // Empty Tree
+            return null;
+        }
+
+        Node curr = root;
+        while (curr != null) {
+            if (curr.data == key) {
+                return curr;
+            }else if (key < curr.data) {
+                curr = curr.left;
+            }else { // key > curr.data
+                curr = curr.right;
+            }
+        }
+        return null; // didn't find a match
+    }
+
     // Recursive Solution
-    public void preorder(TreeNode root) {
+    // preOrder visit order is node, left, right
+    public void preorder(Node root) {
         if(root !=  null) {
-            //Visit the node-Printing the node data
             System.out.printf("%d ",root.data);
             preorder(root.left);
             preorder(root.right);
@@ -25,44 +50,44 @@ public class BinaryTree {
     }
 
     // Iterative solution
-    public void preorderIter(TreeNode root) {
-
-        if(root == null) {
+    public void preorderIter(Node root) {
+        if (root == null) {
             return;
         }
 
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<Node> stack = new Stack<Node>();
         stack.push(root);
 
-        while(!stack.empty()){
-            TreeNode n = stack.pop();
+        while (!stack.empty()){
+            Node n = stack.pop();
             System.out.printf("%d ",n.data);
 
-            if(n.right != null){
+            // add right node to the stack first, so the left node is the first one to get popped
+            if (n.right != null){
                 stack.push(n.right);
             }
-            if(n.left != null){
+            if (n.left != null){
                 stack.push(n.left);
             }
         }
     }
 
     // Recursive Solution
-    public void postOrder(TreeNode root) {
+    // postOrder is left, right, node
+    public void postOrder(Node root) {
         if(root !=  null) {
             postOrder(root.left);
             postOrder(root.right);
-            //Visit the node by Printing the node data
             System.out.printf("%d ",root.data);
         }
     }
 
     // Iterative solution
-    public void postorderIter( TreeNode root) {
+    public void postorderIter( Node root) {
         if( root == null ) return;
 
-        Stack<TreeNode> s = new Stack<TreeNode>( );
-        TreeNode current = root;
+        Stack<Node> s = new Stack<Node>( );
+        Node current = root;
 
         while( true ) {
 
@@ -90,23 +115,22 @@ public class BinaryTree {
     }
 
     // Recursive Solution
-    public void inOrder(TreeNode root) {
+    public void inOrder(Node root) {
         if(root !=  null) {
             inOrder(root.left);
-            //Visit the node by Printing the node data
             System.out.printf("%d ",root.data);
             inOrder(root.right);
         }
     }
 
     // Iterative solution
-    public void inOrderIter(TreeNode root) {
+    public void inOrderIter(Node root) {
 
         if(root == null)
             return;
 
-        Stack<TreeNode> s = new Stack<TreeNode>();
-        TreeNode currentNode=root;
+        Stack<Node> s = new Stack<Node>();
+        Node currentNode=root;
 
         while(!s.empty() || currentNode!=null){
 
@@ -117,20 +141,20 @@ public class BinaryTree {
             }
             else
             {
-                TreeNode n=s.pop();
+                Node n=s.pop();
                 System.out.printf("%d ",n.data);
                 currentNode=n.right;
             }
         }
     }
 
-    // prints in level order
-    public static void levelOrderTraversal(TreeNode startNode) {
-        Queue<TreeNode> queue=new LinkedList<TreeNode>();
+    // Prints level-order traversal, BFS
+    public static void levelOrderTraversal(Node startNode) {
+        Queue<Node> queue=new LinkedList<Node>();
         queue.add(startNode);
         while(!queue.isEmpty())
         {
-            TreeNode tempNode=queue.poll();
+            Node tempNode=queue.poll();
             System.out.printf("%d ",tempNode.data);
             if(tempNode.left!=null)
                 queue.add(tempNode.left);
@@ -140,20 +164,21 @@ public class BinaryTree {
     }
 
     // print leaf nodes
-    public static void printLeafNodes(TreeNode node) {
-
-        if(node==null)
+    public static void printLeafNodes(Node node) {
+        if (node == null)
             return;
 
-        if(node.left == null && node.right == null) {
-            System.out.printf("%d ",node.data);
+        // check if curr node is a leaf node and then call recursive calls after
+        if (node.left == null && node.right == null) {
+            System.out.printf("%d ", node.data);
         }
+
         printLeafNodes(node.left);
         printLeafNodes(node.right);
     }
 
     /* To get the count of leaf nodes in a binary tree*/
-    public static  int getLeafCountOfBinaryTree(TreeNode node)
+    public static  int getLeafCountOfBinaryTree(Node node)
     {
         if(node == null)
             return 0;
@@ -164,7 +189,7 @@ public class BinaryTree {
     }
 
     // Prints all paths to leaf
-    public static void printAllPathsToLeaf(TreeNode node, int[] path, int len) {
+    public static void printAllPathsToLeaf(Node node, int[] path, int len) {
         if ( node == null )
             return;
 
@@ -182,14 +207,14 @@ public class BinaryTree {
         printAllPathsToLeaf(node.right, path, len);
     }
 
-    public static TreeNode createBinaryTree() {
-        TreeNode rootNode = new TreeNode(40);
-        TreeNode node20 = new TreeNode(20);
-        TreeNode node10 = new TreeNode(10);
-        TreeNode node30 = new TreeNode(30);
-        TreeNode node60 = new TreeNode(60);
-        TreeNode node50 = new TreeNode(50);
-        TreeNode node70 = new TreeNode(70);
+    public static Node createBinaryTree() {
+        Node rootNode = new Node(40);
+        Node node20 = new Node(20);
+        Node node10 = new Node(10);
+        Node node30 = new Node(30);
+        Node node60 = new Node(60);
+        Node node50 = new Node(50);
+        Node node70 = new Node(70);
 
         rootNode.left=node20;
         rootNode.right=node60;
@@ -206,7 +231,7 @@ public class BinaryTree {
     public static void main(String[] args) {
         BinaryTree bi=new BinaryTree();
         // Creating a binary tree
-        TreeNode rootNode=createBinaryTree();
+        Node rootNode=createBinaryTree();
         System.out.println("Using Recursive solution:");
 
         bi.preorder(rootNode);
